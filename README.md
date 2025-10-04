@@ -17,3 +17,4 @@ This repository contains an HR Attrition Analysis report based on IBM dataset.
 ## Usage
 
 Download the .pbix file to open in PowerBI Desktop and explore the data.
+<img width="1322" height="746" alt="Dashboard attrition" src="https://github.com/user-attachments/assets/266eef9d-820d-4982-b921-c59a35f25e40" />
