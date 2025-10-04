@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Attrition Analysis - Data Analytics Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #1a2332;
+            background: linear-gradient(135deg, #f5e6d3 0%, #e8d4b8 100%);
+            min-height: 100vh;
+        }
+
+        header {
+            background: transparent;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            color: #1a2332;
+            font-size: 3rem;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #3a4a5c;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .author {
+            margin-top: 0.5rem;
+            color: #5a6a7c;
+            font-style: italic;
+            font-size: 1rem;
+        }
+
+        main {
+            padding: 2rem 0 3rem;
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(26, 35, 50, 0.15);
+        }
+
+        h2 {
+            color: #1a2332;
+            margin-bottom: 1.2rem;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        p {
+            color: #2a3a4c;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .key-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .metric-card {
+            background: rgba(26, 35, 50, 0.85);
+            color: white;
+            padding: 2rem 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(26, 35, 50, 0.3);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            color: #e8d4b8;
+        }
+
+        .dashboard-preview {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(26, 35, 50, 0.2);
+            margin: 1.5rem 0;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .dashboard-preview:hover {
+            transform: scale(1.02);
+        }
+
+        .report-section {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .report-section h3 {
+            color: #1a2332;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .report-section ul {
+            margin-left: 2rem;
+            margin-top: 1rem;
+            color: #2a3a4c;
+        }
+
+        .report-section ul li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: #1a2332;
+            color: #f5e6d3;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+            box-shadow: 0 4px 15px rgba(26, 35, 50, 0.3);
+            font-size: 1.05rem;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(26, 35, 50, 0.4);
+            background: #2a3a4c;
+        }
+
+        .insights-list {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .insights-list li {
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-left: 4px solid #1a2332;
+            border-radius: 8px;
+            color: #2a3a4c;
+        }
+
+        .insights-list li strong {
+            color: #1a2332;
+        }
+
+        footer {
+            background: transparent;
+            padding: 2rem 0;
+            text-align: center;
+            color: #5a6a7c;
+            border-top: 1px solid rgba(26, 35, 50, 0.15);
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .key-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .content-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>HR Attrition Analysis</h1>
+            <p class="subtitle">Comprehensive Data Analytics Project</p>
+            <p class="author">By Yuvraj Kaushik</p>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="content-section">
+                <h2>Project Overview</h2>
+                <p>This comprehensive analysis examines employee attrition patterns across 1,470 employees, identifying key drivers behind turnover and providing strategic, data-driven recommendations to enhance organizational retention.</p>
+                
+                <div class="key-metrics">
+                    <div class="metric-card">
+                        <div class="metric-value">1,470</div>
+                        <div class="metric-label">Total Employees</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">237</div>
+                        <div class="metric-label">Attrition Count</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">16.12%</div>
+                        <div class="metric-label">Attrition Rate</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">$6,500</div>
+                        <div class="metric-label">Avg Monthly Salary</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>Interactive Dashboard</h2>
+                <p>Explore the Power BI dashboard showcasing attrition metrics across departments, job roles, and demographic segments.</p>
+                <img src="./Dashboard attrition.png" alt="HR Attrition Analysis Dashboard" class="dashboard-preview" >
+                <p style="text-align: center; color: #5a6a7c; font-size: 0.95rem; margin-top: 0.8rem;">Snapshot of the dashboard</p>
+            </div>
+
+            <div class="content-section">
+                <h2>Key Insights</h2>
+                <ul class="insights-list">
+                    <li><strong>Highest Risk Department:</strong> Sales department shows 20.6% attrition rate</li>
+                    <li><strong>Critical Roles:</strong> Laboratory Technicians (62), Sales Executives (57), and Research Scientists (47) account for 70% of attrition</li>
+                    <li><strong>Age Factor:</strong> Employees aged 26-35 show highest turnover (116 departures)</li>
+                    <li><strong>Income Correlation:</strong> Employees earning under $3,000/month have 25%+ attrition rate</li>
+                    <li><strong>Overtime Impact:</strong> Employees working overtime are 3x more likely to leave (31.5% vs 10.4%)</li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <h2>Detailed Report</h2>
+                <div class="report-section">
+                    <h3>Strategic Recommendations Included</h3>
+                    <p>The comprehensive PDF report includes:</p>
+                    <ul>
+                        <li>Departmental and role-based attrition analysis</li>
+                        <li>Demographic deep dive and career stage insights</li>
+                        <li>Root cause analysis of attrition drivers</li>
+                        <li>High-risk employee profiles</li>
+                        <li>Actionable strategic recommendations</li>
+                    </ul>
+                    <a href="HR Attrition Analysis PowerBI report.pdf" class="download-btn" ; return false;">📄 Download Full Report (PDF)</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Yuvraj Kaushik | HR Attrition Analysis Project</p>
+            <p style="margin-top: 0.5rem; font-size: 0.95rem;">Built with Power BI | Data Analytics Portfolio</p>
+        </div>
+    </footer>
+
+    <script>
+        console.log('HR Attrition Analysis Landing Page Loaded');
+    </script>
+</body>
+</html>
